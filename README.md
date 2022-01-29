@@ -13,9 +13,9 @@ Dead simple CSRF security middleware for Starlette ⭐ and Fast API ⚡
 
 ### Usage
 
-1. Pass `request.state.csrftoken` to your template engine (such as jinja2).
+1. Pass `request.state.csrftoken` to your template engine (such as [jinja2 starlette templates](https://www.starlette.io/templates/)).
     1. Use it directly in HTML `<input type="hidden" name="csrftoken" value="{{ csrftoken }}" />`
-    2. Use it in a request header named 'csrftoken' (for javascript / ajax frameworks such as [htmx](https://htmx.org/))
+    2. Use it in a request header named 'csrftoken' (for javascript / ajax frameworks such as the elegant [htmx](https://htmx.org/) ♥️)
 
 ### Why?
 
