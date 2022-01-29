@@ -5,21 +5,20 @@ from starlette.responses import PlainTextResponse
 class CSRFMiddleware(BaseHTTPMiddleware):
 	"""
 	CSRF / Cross Site Request Forgery Security Middleware for Starlette and FastAPI.
-		1. Add this middleware using the middleware= parameter of your Starlette() app.
-		2. In your jinja2 templates: <input type="hidden" name="csrftoken" value="{{ request.state.csrftoken }}" />
-		3. Or for javascript, set a request header 'csrftoken' to request.state.csrftoken.
-
+		1. Add this middleware using the middleware= parameter of your app.
+		2. request.state.csrftoken will now be available.
+		3. Use directly in an HTML <form> POST with <input type="hidden" name="csrftoken" value="{{ csrftoken }}" />
+		4. Use with javascript / ajax POST by sending a request header 'csrftoken' with request.state.csrftoken
 	Notes
-		Users must always start on a "safe page" (a typical GET request) to generate the CSRF cookie.
-		Uses session level CSRF so you can use frameworks such as htmx, without issues. 🙂 (https://htmx.org/)
- 		CSRF tokens can be sent with the HTML <form> as a type="hidden" field, or added to a request header as 'csrftoken'.
-			Token is stored in request.state.csrftoken for use in templates.
-	Details
+		Users must should start on a "safe page" (a typical GET request) to generate the initial CSRF cookie.
+		Uses session level CSRF so you can use frameworks such as htmx, without issues. (https://htmx.org/)
+		Token is stored in request.state.csrftoken for use in templates.
+	Reference
 		https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
 	"""
 	async def dispatch(self, request, call_next):
 		CSRF_TOKEN_NAME = 'csrftoken'
-		TOKEN_EXPIRY = 10 * 24 * 60 * 60 # Valid for 10 days before forced regeneration.
+		CSRF_TOKEN_EXPIRY = 10 * 24 * 60 * 60 # Valid for 10 days before regeneration.
 		request.state.csrftoken = '' # Always available even if we don't get it from cookie.
 
 		token_new_cookie  = False
@@ -49,6 +48,6 @@ class CSRFMiddleware(BaseHTTPMiddleware):
 
 		# 🍪 Set CSRF cookie on the response.
 		if token_new_cookie and token_from_cookie:
-			response.set_cookie(CSRF_TOKEN_NAME, token_from_cookie, TOKEN_EXPIRY, path='/', domain=None, secure=False, httponly=False, samesite='strict')
+			response.set_cookie(CSRF_TOKEN_NAME, token_from_cookie, CSRF_TOKEN_EXPIRY, path='/', domain=None, secure=False, httponly=False, samesite='strict')
 
 		return response
