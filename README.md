@@ -53,7 +53,9 @@ To make available something more simple and auditable than the typical libraries
 
 ### Do I need CSRF Middleware?
 
-* Maybe Not?  https://scotthelme.co.uk/csrf-is-dead/
-* Maybe Not? https://scotthelme.co.uk/csrf-is-really-dead/
-* Maybe? https://simonwillison.net/2021/Aug/3/samesite/
+Maybe? Maybe not?
+
+* https://scotthelme.co.uk/csrf-is-dead/
+* https://scotthelme.co.uk/csrf-is-really-dead/
+* https://simonwillison.net/2021/Aug/3/samesite/
 * Ongoing: https://github.com/encode/starlette/discussions/1411
