@@ -1,9 +1,9 @@
-# 2022: Why you may not need a CSRF Middleware
+# Why you may not need a CSRF Middleware in 2022
 
-Recent cookie enhancements can solve CSRF for you. Solve CSRF by setting two cookies:
+Recent cookie enhancements can solve CSRF for you:
 
-1. One to "lax" one set to "strict".
-2. Check for the "strict" cookie whenever there's a database write.
+1. Set one cookie to "lax", set one cookie to "strict".
+2. Check for the "strict" cookie whenever there's a database write (or other sensitive action).
 
 The "strict" cookie will not exist in situations where CSRF will be a threat.
 
@@ -14,7 +14,7 @@ The "strict" cookie will not exist in situations where CSRF will be a threat.
 * https://simonwillison.net/2021/Aug/3/samesite/
 * Discussion: https://github.com/encode/starlette/discussions/1411
 
-### However if you still want a middleware, read on:
+### 🤔 However if you still wish to use a middleware for some reason, read on:
 
 # csrf-starlette-fastapi
 Dead simple CSRF security middleware for Starlette ⭐ and Fast API ⚡
