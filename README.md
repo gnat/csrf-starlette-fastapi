@@ -1,3 +1,21 @@
+# 2022: Why you may not need a CSRF Middleware
+
+Recent cookie enhancements can solve CSRF for you. Solve CSRF by setting two cookies:
+
+1. One to "lax" one set to "strict".
+2. Check for the "strict" cookie whenever there's a database write.
+
+The "strict" cookie will not exist in situations where CSRF will be a threat.
+
+### References
+
+* https://scotthelme.co.uk/csrf-is-dead/
+* https://scotthelme.co.uk/csrf-is-really-dead/
+* https://simonwillison.net/2021/Aug/3/samesite/
+* Discussion: https://github.com/encode/starlette/discussions/1411
+
+### However if you still want a middleware, read on:
+
 # csrf-starlette-fastapi
 Dead simple CSRF security middleware for Starlette ⭐ and Fast API ⚡
 
@@ -34,15 +52,12 @@ app = FastAPI()
 app.add_middleware(CSRFMiddleware)
 ```
 ### Usage
-* Use directly in HTML.
+* Directly with HTML.
   * Pass `request.state.csrftoken` to your [template engine](https://www.starlette.io/templates/).
   * `<input type="hidden" name="csrftoken" value="{{ csrftoken }}" />`
-* Use javascript / ajax frameworks such as the elegant [htmx](https://htmx.org/) ♥️
-  * Before your ajax call, set your headers.
-    * Most frameworks: `headers: { 'csrftoken': '{{ csrftoken }}' }`
+* Using [htmx](https://htmx.org/) ♥️: `<body hx-headers='{"csrftoken": "{{ csrftoken }}"}'>`
+* Using Javascript frameworks: `headers: { 'csrftoken': '{{ csrftoken }}' }`
     * [XMLHttpRequest.setRequestHeader()](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader)
-* Another [htmx](https://htmx.org/) ♥️ solution.
-  * `<body hx-headers='{"csrftoken": "{{ csrftoken }}"}'>`
 
 ### Why?
 
@@ -50,12 +65,3 @@ To make available something more simple and auditable than the typical libraries
 * https://github.com/simonw/asgi-csrf
 * https://github.com/frankie567/starlette-csrf
 * https://github.com/piccolo-orm/piccolo_api/blob/master/piccolo_api/csrf/middleware.py 
-
-### Do I need CSRF Middleware?
-
-Maybe? Maybe not?
-
-* https://scotthelme.co.uk/csrf-is-dead/
-* https://scotthelme.co.uk/csrf-is-really-dead/
-* https://simonwillison.net/2021/Aug/3/samesite/
-* Ongoing: https://github.com/encode/starlette/discussions/1411
