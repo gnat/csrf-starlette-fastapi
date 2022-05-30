@@ -14,7 +14,7 @@ The "strict" cookie will not exist in situations where CSRF will be a threat.
 * https://simonwillison.net/2021/Aug/3/samesite/
 * Discussion: https://github.com/encode/starlette/discussions/1411
 
-### 🤔 However if you still wish to use a middleware for some reason, read on:
+### Thanks for coming. 🤔 However if you still wish to use a middleware for some reason, please continue!
 
 # csrf-starlette-fastapi
 Dead simple CSRF security middleware for Starlette ⭐ and Fast API ⚡
