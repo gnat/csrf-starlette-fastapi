@@ -24,7 +24,7 @@ class CSRFMiddleware(BaseHTTPMiddleware):
 		token_new_cookie  = False
 		token_from_cookie = request.cookies.get(CSRF_TOKEN_NAME, None)
 		token_from_header = request.headers.get(CSRF_TOKEN_NAME, None)
-		if request.state.get("post"):
+		if hasattr(request.state, "post"):
 			token_from_post = request.state.post.get(CSRF_TOKEN_NAME, None)
 
 		# 🍪 Fetch the cookie only if we're using an appropriate request method (like Django does).
