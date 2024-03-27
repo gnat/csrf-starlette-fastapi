@@ -21,7 +21,8 @@ class CSRFMiddleware(BaseHTTPMiddleware):
 		CSRF_TOKEN_EXPIRY = 10 * 24 * 60 * 60 # Valid for 10 days before regeneration.
 		request.state.csrftoken = '' # Always available even if we don't get it from cookie.
 
-		token_new_cookie  = False
+		token_from_post = False
+		token_new_cookie = False
 		token_from_cookie = request.cookies.get(CSRF_TOKEN_NAME, None)
 		token_from_header = request.headers.get(CSRF_TOKEN_NAME, None)
 		if hasattr(request.state, "post"):
